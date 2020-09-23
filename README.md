@@ -20,7 +20,7 @@ Search for postings matching SRE or devops:
 $ ./filter "sre|devops"
 ```
 
-Search for SRE and DevOps in Seattle:
+Search for SRE or DevOps in Seattle:
 
 ```
 $ ./filter "sre|devops" "seattle"
