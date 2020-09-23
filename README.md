@@ -17,13 +17,13 @@ Multiple filters are ANDed together.
 Search for postings matching SRE or devops:
 
 ```
-$ ./filter "sre|devops$ ./filter "sre|devops"
+$ ./filter "sre|devops"
 ```
 
 Search for SRE and DevOps in Seattle:
 
 ```
-$ ./filter "sre|devops$ ./filter "sre|devops" "seattle"
+$ ./filter "sre|devops" "seattle"
 ```
 
 Read `candidates.html` using your favourite web browser.
