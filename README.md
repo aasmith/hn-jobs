@@ -10,15 +10,21 @@ Download the latest posts and responses. A cache is populated in `cache.json` to
 $ ruby hnpull.rb
 ```
 
-Filter the current cache against some specifics in filter.rb. Edit this file to change requirements.
+Filter the current cache of postings against a provided regexp.
+
+Multiple filters are ANDed together.
+
+Search for postings matching SRE or devops:
 
 ```
-$ ruby filter.rb < cache.json > candidates.html
+$ ./filter "sre|devops$ ./filter "sre|devops"
+```
+
+Search for SRE and DevOps in Seattle:
+
+```
+$ ./filter "sre|devops$ ./filter "sre|devops" "seattle"
 ```
 
 Read `candidates.html` using your favourite web browser.
 
-## TODO
-
- * Usability
- * Cache expiration / purging

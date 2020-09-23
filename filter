@@ -1,0 +1,45 @@
+#!/usr/bin/ruby
+
+require "date"
+require "json"
+
+abort 'usage: filter "regex" <"regex"...>' unless ARGV.size > 0
+
+HR = "<hr style=height:5px;color:black;background-color:black;border:none;>"
+
+def format_postings(postings, attrs)
+  postings.
+    map { |posting| "<p style=#{attrs}>" + ("posted %s" % Time.at(posting["time"])) + "<p>" + posting["text"] }.
+    join(HR)
+end
+
+postings = JSON.parse(File.read("cache.json")).values
+
+anyignorecase = false
+
+filters = ARGV.map do |filter_arg|
+  ignorecase = filter_arg.downcase == filter_arg
+  anyignorecase |= ignorecase
+
+  Regexp.new(filter_arg, ignorecase ? Regexp::IGNORECASE : nil)
+end
+
+warn "lowercase filters will be treated as case insensitive" if anyignorecase
+
+postings.select! do |posting|
+  filters.all? do |filter|
+    posting["text"] =~ filter
+  end
+end
+
+postings.sort_by! { |posting| -posting["time"] }
+
+newer, older = postings.partition { |posting| Time.at(posting["time"]) > (Date.today - 30).to_time }
+
+File.open("candidates.html", "wb") do |f|
+  f.write(format_postings(newer, "color:fuchsia;"))
+  f.write(HR)
+  f.write(format_postings(newer, "color:grey;"))
+end
+
+warn "wrote %s postings (%s were 30 days or newer) to candidates.html" % [postings.size, newer.size]
