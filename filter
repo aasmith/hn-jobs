@@ -37,6 +37,7 @@ postings.sort_by! { |posting| -posting["time"] }
 newer, older = postings.partition { |posting| Time.at(posting["time"]) > (Date.today - 30).to_time }
 
 File.open("candidates.html", "wb") do |f|
+  f.write "<style>pre {white-space: pre-wrap;}</style>"
   f.write(format_postings(newer, "color:fuchsia;"))
   f.write(HR)
   f.write(format_postings(newer, "color:grey;"))
