@@ -40,7 +40,7 @@ File.open("candidates.html", "wb") do |f|
   f.write "<style>pre {white-space: pre-wrap;}</style>"
   f.write(format_postings(newer, "color:fuchsia;"))
   f.write(HR)
-  f.write(format_postings(newer, "color:grey;"))
+  f.write(format_postings(older, "color:grey;"))
 end
 
 warn "wrote %s postings (%s were 30 days or newer) to candidates.html" % [postings.size, newer.size]
